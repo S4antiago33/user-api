@@ -59,6 +59,12 @@ public class UserService implements UserDetailsService {
                 .toList();
     }
 
+    public void deletarPorId(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new IllegalArgumentException("Usuário não encontrado com o ID: " + id);
+        }
+        userRepository.deleteById(id);
+    }
 
 
 }
