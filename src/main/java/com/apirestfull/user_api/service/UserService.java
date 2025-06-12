@@ -1,5 +1,6 @@
 package com.apirestfull.user_api.service;
 
+import com.apirestfull.user_api.DTOs.UpdateUsuarioDTO;
 import com.apirestfull.user_api.DTOs.UsuarioResponseDTO;
 import com.apirestfull.user_api.models.Usuario;
 import com.apirestfull.user_api.repository.UserRepository;
@@ -64,6 +65,19 @@ public class UserService implements UserDetailsService {
             throw new IllegalArgumentException("Usuário não encontrado com o ID: " + id);
         }
         userRepository.deleteById(id);
+    }
+
+    public UsuarioResponseDTO atualizar(Long id, UpdateUsuarioDTO dados) {
+        Usuario usuario = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        usuario.setNome(dados.getNome());
+        usuario.setEmail(dados.getEmail());
+        usuario.setPassword(dados.getPassword());
+
+        Usuario atualizado = userRepository.save(usuario);
+
+        return new UsuarioResponseDTO(atualizado.getId(), atualizado.getNome(), atualizado.getEmail());
     }
 
 

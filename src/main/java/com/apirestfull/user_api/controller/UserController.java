@@ -1,7 +1,9 @@
 package com.apirestfull.user_api.controller;
 
+import com.apirestfull.user_api.DTOs.UpdateUsuarioDTO;
 import com.apirestfull.user_api.DTOs.UsuarioResponseDTO;
 import com.apirestfull.user_api.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +46,13 @@ public class UserController {
     public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
         userService.deletarPorId(id);
         return ResponseEntity.noContent().build(); // 204 No Content
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable Long id,
+                                                               @RequestBody @Valid UpdateUsuarioDTO dados) {
+        UsuarioResponseDTO atualizado = userService.atualizar(id, dados);
+        return ResponseEntity.ok(atualizado);
     }
 
 
