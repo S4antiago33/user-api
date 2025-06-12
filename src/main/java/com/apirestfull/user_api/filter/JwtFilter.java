@@ -32,7 +32,6 @@ public class JwtFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        System.out.println("Interceptando: " + request.getRequestURI());
 
         if (path.startsWith("/login")) {
             filterChain.doFilter(request, response);
